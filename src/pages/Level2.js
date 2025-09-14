@@ -8,7 +8,7 @@ function Level2() {
   };
 
   return (
-    <div className="level">
+    <div className="center">
       <h2>Nível 2</h2>
       <p>Resolva o enigma para avançar.</p>
       <button onClick={handleComplete}>Resolver e Avançar</button>

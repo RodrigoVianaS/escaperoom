@@ -44,7 +44,7 @@ export default function Level3() {
 
   const opcoes = ["Norte", "Sul", "Leste", "Oeste"];
   return (
-  <div className="page">
+  <div className="page center">
     <h1>Level 3 — Corredor das Direções</h1>
     <p>Siga a sequência correta. Se errar, volta ao início.</p>
 
@@ -62,7 +62,7 @@ export default function Level3() {
     </div>
 
     {concluido && (
-      <div className="level">
+      <div className="center">
         <h2>Nível 3 concluído!</h2>
         <p>Resolva o enigma para avançar.</p>
         <button onClick={handleComplete} className="btn">

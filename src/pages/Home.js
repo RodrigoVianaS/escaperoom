@@ -4,9 +4,9 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="home">
-      <h1>Escape Room</h1>
-      <button onClick={() => navigate("/Level1")}>Jogar</button>
+    <div className="center">
+      <h1 className="titulo">Escape Room</h1>
+      <button className="btn-jogar" onClick={() => navigate("/level1")}>Jogar</button>
     </div>
   );
 }

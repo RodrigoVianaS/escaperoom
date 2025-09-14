@@ -31,8 +31,8 @@ export default function Level1() {
  }
 
   return (
-    <div className="page">
-      <h1>Nível 1 — de de cesar o que é de cesar</h1>
+    <div className="center">
+      <h1>Nível 1 — de cesar o que é de cesar</h1>
 
       <p>Digite uma famosa citação de Cesar:</p>
       
