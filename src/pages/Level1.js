@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { replace, useNavigate } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useProgress } from "../progress/ProgressContext.jsx";
 
 export default function Level1() {
@@ -9,43 +9,46 @@ export default function Level1() {
   const navigate = useNavigate();
   const { completeLevel } = useProgress();
 
+  const inputRef = useRef(null);
+
   function arrumarTexto(txt) {
     return txt
-    .trim()
-    .toLowerCase()
-    .replace(/,/g, "")
-    .replace(/\s+/g, " ");
+      .trim()
+      .toUpperCase()
+      .replace(/[\s,]/g, "");
   }
 
-
- function verificar(){
+  function verificar() {
     const ajuste = arrumarTexto(resposta);
-    if(ajuste === "veni vidi vici"){
+
+    if (ajuste === "OND") {
       completeLevel(1);
-      navigate("/level2", {replace: true});
-    } else{
+      navigate("/level2", { replace: true });
+    } else {
       setErro(true);
+      setResposta("");
+      inputRef.current.focus(); 
     }
-
-
- }
+  }
 
   return (
     <div className="center">
-      <h1>Nível 1 — de cesar o que é de cesar</h1>
+      <h1 className="titulo-jogo">Nível 1 — Sequência de Letras</h1>
 
-      <p>Digite uma famosa citação de Cesar:</p>
-      
-      <p><i>Dica: são três palavras.</i></p>
+      <p className="paragrafo-jogo">Tenha atenção a esta sequência de letras:</p>
+      <p className="paragrafo-jogo-sub"><strong>U D T Q C S S</strong></p>
+      <p className="paragrafo-jogo-sub"><i>Será que você consegue descobrir quais são as próximas 3 letras?</i></p>
 
       <input
         type="text"
+        ref={inputRef}
         value={resposta}
         onChange={(e) => setResposta(e.target.value)}
         placeholder="Digite aqui..."
-        className="input"
+        className="input-jogo"
       />
-      <button onClick={verificar} className="btn" style={{ marginLeft: 8 }}>
+
+      <button onClick={verificar} className="btn-jogar-sub" style={{ marginTop: 42 }}>
         Confirmar
       </button>
 
