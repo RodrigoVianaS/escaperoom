@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Level2() {
   const [resposta, setResposta] = useState("");
   const [erro, setErro] = useState(false);
   const navigate = useNavigate();
+
+  const inputRef = useRef(null);
 
   function arrumarTexto(txt) {
     return txt.trim().toLowerCase().replace(/\s+/g, "");
@@ -16,6 +18,8 @@ function Level2() {
       navigate("/level3", { replace: true });
     } else {
       setErro(true);
+      setResposta("");
+      inputRef.current.focus();
     }
   };
 
@@ -31,6 +35,7 @@ function Level2() {
       </p>
 
       <input
+        ref={inputRef}
         type="text"
         value={resposta}
         onChange={(e) => setResposta(e.target.value)}
