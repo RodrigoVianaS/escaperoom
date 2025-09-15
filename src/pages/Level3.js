@@ -1,75 +1,71 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProgress } from "../progress/ProgressContext.jsx";
 
-
-const SEQ_CORRETA = ["Norte", "Leste", "Sul", "Sul", "Oeste", "Norte"];
-
-export default function Level3() {
-  const [sequencia, setSequencia] = useState([]);
-  const [concluido, setConcluido] = useState(false);
-
+function Level3() {
+  const [resposta, setResposta] = useState("");
+  const [erro, setErro] = useState(false);
   const navigate = useNavigate();
-  const { addAttempt, completeLevel } = useProgress();
-
-  const corretaAteAgora = useMemo(
-    () => sequencia.every((s, i) => s === SEQ_CORRETA[i]),
-    [sequencia]
-  );
-  const finalizado = sequencia.length === SEQ_CORRETA.length && corretaAteAgora;
-
-  function escolher(dir) {
-    const nova = [...sequencia, dir];
-    const okAteAqui = nova.every((s, i) => s === SEQ_CORRETA[i]);
-
-    if (!okAteAqui) {
-      setSequencia([]);
-      addAttempt(1);
-      alert("Caminho incorreto! Voltou ao início.");
-      return;
-    }
-    setSequencia(nova);
-  }
+  const { highestLevel, completeLevel } = useProgress();
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (finalizado) {
-      setConcluido(true); 
-      completeLevel(3);   
+    if (highestLevel < 2) {
+      navigate("/", { replace: true });
+    } else {
+      inputRef.current?.focus();
     }
-  }, [finalizado, completeLevel]);
+  }, [highestLevel, navigate]);
 
-  function handleComplete() {
-    navigate("/level4", { replace: true });
+  function arrumarTexto(txt) {
+    return txt.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 
-  const opcoes = ["Norte", "Sul", "Leste", "Oeste"];
+  const verificar = () => {
+    const ajuste = arrumarTexto(resposta);
+    if (ajuste === "bluetooth") {
+      completeLevel(3);
+      navigate("/level4", { replace: true });
+    } else {
+      setErro(true);
+      setResposta("");
+      inputRef.current.focus();
+    }
+  };
+
   return (
-  <div className="page center">
-    <h1>Level 3 — Corredor das Direções</h1>
-    <p>Siga a sequência correta. Se errar, volta ao início.</p>
+    <div className="center">
+      <h2 className="titulo-jogo">Nível 3 — Desafio de Anagrama</h2>
 
-    <div className="options">
-      {opcoes.map((d) => (
-        <button key={d} onClick={() => escolher(d)} className="btn">
-          {d}
-        </button>
-      ))}
+      <p className="paragrafo-jogo-sub">
+        Decifre esta frase embaralhada para descobrir a dica da senha: <br />
+        <b className="paragrafo-jogo">"ezu d teand al senha é"</b>
+      </p>
+
+      <p className="paragrafo-jogo-sub">
+        <i>Dica: a frase correta vai revelar algo que te ajuda a descobrir a senha final.</i>
+      </p>
+
+      <input
+        ref={inputRef}
+        type="text"
+        value={resposta}
+        onChange={(e) => setResposta(e.target.value)}
+        placeholder="Digite a senha final..."
+        className="input-jogo"
+      />
+
+      <button onClick={verificar} className="btn-jogar-sub" style={{ marginTop: 42 }}>
+        Confirmar
+      </button>
+
+      {erro && (
+        <p style={{ color: "red", marginTop: 12 }}>
+          Resposta incorreta, tente novamente.
+        </p>
+      )}
     </div>
-
-    <div className="progress">
-      Progresso: {sequencia.length}/{SEQ_CORRETA.length}
-      {sequencia.length > 0 && <span> — [{sequencia.join(" → ")}]</span>}
-    </div>
-
-    {concluido && (
-      <div className="center">
-        <h2>Nível 3 concluído!</h2>
-        <p>Resolva o enigma para avançar.</p>
-        <button onClick={handleComplete} className="btn">
-          Resolver e Avançar
-        </button>
-      </div>
-    )}
-  </div>
-);
+  );
 }
+
+export default Level3;

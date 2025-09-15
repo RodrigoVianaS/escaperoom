@@ -1,12 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useProgress } from "../progress/ProgressContext.jsx";
 
 function Level2() {
   const [resposta, setResposta] = useState("");
   const [erro, setErro] = useState(false);
   const navigate = useNavigate();
+  const { highestLevel, completeLevel } = useProgress();
 
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (highestLevel < 1) {
+      navigate("/", { replace: true });
+    }
+  }, [highestLevel, navigate]);
 
   function arrumarTexto(txt) {
     return txt.trim().toLowerCase().replace(/\s+/g, "");
@@ -15,6 +23,7 @@ function Level2() {
   const verificar = () => {
     const ajuste = arrumarTexto(resposta);
     if (ajuste === "onda") {
+      completeLevel(2);
       navigate("/level3", { replace: true });
     } else {
       setErro(true);
@@ -43,7 +52,7 @@ function Level2() {
         className="input-jogo"
       />
 
-      <button onClick={verificar} className="btn-jogar" style={{ marginTop: 42 }}>
+      <button onClick={verificar} className="btn-jogar-sub" style={{ marginTop: 42 }}>
         Confirmar
       </button>
 
