@@ -36,7 +36,7 @@ export default function Level1() {
       <h1 className="titulo-jogo">Nível 1 — Sequência de Letras</h1>
 
       <p className="paragrafo-jogo">Tenha atenção a esta sequência de letras:</p>
-      <p className="paragrafo-jogo-sub"><strong>U D T Q C S S</strong></p>
+      <p className="letras-lvl1"><strong>U D T Q C S S</strong></p>
       <p className="paragrafo-jogo-sub"><i>Será que você consegue descobrir quais são as próximas 3 letras?</i></p>
 
       <input
