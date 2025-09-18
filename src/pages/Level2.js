@@ -22,7 +22,7 @@ function Level2() {
 
   const verificar = () => {
     const ajuste = arrumarTexto(resposta);
-    if (ajuste === "onda") {
+    if (ajuste === "neon") {
       completeLevel(2);
       navigate("/level3", { replace: true });
     } else {
@@ -37,10 +37,14 @@ function Level2() {
       <h2 className="titulo-jogo">Nível 2 — Atenção ao texto</h2>
 
       <p className="paragrafo-jogo">
-        Olhe com bastante atenção neste texto. <br />
-        Nunca ignore os pequenos detalhes. <br />
-        Diga a si mesmo que a resposta está aqui. <br />
-        Apenas os mais atentos vão perceber. <br />
+        Na noite enluarada, ninguém parecia notar. <br />
+        Entre sombras e luzes, apenas um brilho se destacava.<br />
+        O ambiente vibrava silenciosamente, os olhos atentos seguiam o inesperado. <br />
+        Nada parecia fora do lugar, mas algo chamava atenção. <br />
+      </p>
+
+      <p className="paragrafo-jogo-sub">
+        <i>Dica: Cada linha esconde uma parte</i>
       </p>
 
       <input
